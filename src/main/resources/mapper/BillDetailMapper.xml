@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eveb.bottlepay.common.mapper.BillDetailMapper">
+
+    <insert id="inserBillDetail" parameterType="com.eveb.bottlepay.common.entity.BillDetail">
+    	 <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+          SELECT LAST_INSERT_ID()
+      	 </selectKey>
+         INSERT INTO bill_detail(userId,
+         						userName,
+								templateId,
+								money,
+								discountsCharge,
+								sets,
+								setDetail,
+								payType,
+								imagePath,
+								urlPath,
+								status,
+								isSysPay,
+								siteNo,
+								siteName,
+								createTime,
+							    modifyTime
+         				) VALUES (
+         					  #{userId},
+         					  #{userName},
+         					  #{templateId},
+         					  #{money},
+         					  #{discountsCharge},
+         					  #{sets},
+         					  #{setDetail},
+         					  #{payType},
+         					  #{imagePath},
+         					  #{urlPath},
+         					  #{status},
+         					  #{isSysPay},
+         					  #{siteNo},
+         					  #{siteName},
+         					  #{createTime},
+         					  #{modifyTime}
+         				)
+    </insert>
+    
+    <select id="findOrderList" resultType="com.eveb.bottlepay.common.entity.BillDetail">
+    	select t.id,
+			   t.userId,
+			   t.userName,
+			   t.templateId,
+			   t.money,
+			   t.discountsCharge,
+			   t.sets,
+			   t.setDetail,
+			   t.payType,
+			   t.imagePath,
+			   t.urlPath,
+			   t.status,
+			   t.isSysPay,
+			   t.siteNo,
+			   t.siteName,
+			   t.createTime,
+		       t.modifyTime
+		  from bill_detail t 
+		where t.userId = #{userId} order by t.createTime desc
+    </select>
+    
+    <select id="findOrderInfo" resultType="com.eveb.bottlepay.common.entity.BillDetail">
+    	select t.id,
+			   t.userId,
+			   t.userName,
+			   t.templateId,
+			   t.money,
+			   t.discountsCharge,
+			   t.sets,
+			   t.setDetail,
+			   t.payType,
+			   t.imagePath,
+			   t.urlPath,
+			   t.status,
+			   t.isSysPay,
+			   t.siteNo,
+			   t.siteName,
+			   t.createTime,
+		       t.modifyTime
+		  from bill_detail t 
+		where t.id = #{id}
+    </select>
+    
+    <select id="findOrderInfoByTempId" resultType="com.eveb.bottlepay.common.entity.BillDetail">
+    	select t.id,
+			   t.userId,
+			   t.userName,
+			   t.templateId,
+			   t.money,
+			   t.discountsCharge,
+			   t.sets,
+			   t.setDetail,
+			   t.payType,
+			   t.imagePath,
+			   t.urlPath,
+			   t.status,
+			   t.isSysPay,
+			   t.siteNo,
+			   t.siteName,
+			   t.createTime,
+		       t.modifyTime
+		  from bill_detail t 
+		where t.userId = #{userId} 
+		  and t.templateId = #{templateId}
+		  and t.status in (0, 1)
+    </select>
+    
+    
+    <update id="updateBillDetailInfo">
+    	update bill_detail set status=#{status},
+    						 modifyTime=#{modifyTime}
+    				   where id = #{id}
+    </update>
+    
+    <update id="updateBillDetail" parameterType="com.eveb.bottlepay.common.entity.BillDetail">
+        update bill_detail set money=#{money},
+							   discountsCharge=#{discountsCharge},
+							   sets=#{sets},
+							   setDetail=#{setDetail},
+							   payType=#{payType},
+							   imagePath=#{imagePath},
+							   urlPath=#{urlPath},
+							   status=#{status},
+							   isSysPay=#{isSysPay},
+							   siteNo=#{siteNo},
+							   siteName=#{siteName},
+							   createTime=#{createTime},
+						       modifyTime=#{modifyTime}
+						 where userId=#{userId}
+						   and templateId=#{templateId}
+    </update>
+    
+    <update id="updateListByPeriodOf">
+    	update bill_detail set status=3,
+    						 modifyTime=NOW()
+    				   where status=0 
+		   				 and date_add(createTime, interval 1 day) <![CDATA[ < ]]> NOW()
+    </update>
+    
+    <delete id="deleteOrder" parameterType="java.lang.Integer">
+    	delete from bill_detail where id=#{id}
+    </delete>
+    
+    <select id="findAllBillDetail" parameterType="com.eveb.bottlepay.common.entity.BillDetail" resultType="com.eveb.bottlepay.common.entity.BillDetail">
+    	select t.id,
+			   t.userId,
+			   t.userName,
+			   t.templateId,
+			   t.money,
+			   t.discountsCharge,
+			   t.sets,
+			   t.setDetail,
+			   t.payType,
+			   t.imagePath,
+			   t.urlPath,
+			   t.status,
+			   t.isSysPay,
+			   t.siteNo,
+			   t.siteName,
+			   t.createTime,
+		       t.modifyTime
+		  from bill_detail t 
+		<include refid="billDetail_where"/>
+		order by t.createTime desc
+    </select>
+    
+    <sql id="billDetail_where">
+    	<where>
+		 	<if test="id != null">
+                AND t.id = #{id}
+            </if>
+            <if test="userName != null and userName!=''">
+                AND t.userName like concat('%',#{userName},'%')
+            </if>
+            <if test="status != null">
+                AND t.status = #{status}
+            </if>
+            <if test="startTime != null and startTime!=''">
+			   AND (t.modifyTime<![CDATA[ >=  ]]>str_to_date(#{startTime},'%Y-%m-%d %H:%i:%s'))
+			</if>
+			<if test="endTime != null and endTime!=''">
+			   AND (t.modifyTime<![CDATA[ <=  ]]>str_to_date(#{endTime},'%Y-%m-%d %H:%i:%s'))
+			</if>
+		 </where>
+    </sql>
+    
+    <update id="updateStatus">
+    	update bill_detail set status=#{status},
+    	                      isSysPay=#{isSysPay},
+    	                      modifyTime=#{modifyTime}
+    	                where id = #{id}
+    </update>
+    
+    <update id="updatePrice">
+    	update bill_detail set discountsCharge=#{discountsCharge}
+    	           where id = #{id}
+    </update>
+    
+</mapper>

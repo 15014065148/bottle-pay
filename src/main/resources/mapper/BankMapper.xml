@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eveb.bottlepay.common.mapper.BankMapper">
+    
+    <select id="findBankListByChannelId" resultType="com.eveb.bottlepay.common.entity.Bank" parameterType="java.util.Set">
+    	select t.channelId,
+			 bnk.id,
+			 bnk.bankCode,
+			 bnk.bankName,
+			 bnk.bankLog 
+	    from channel_bank t 
+	    	left join bank bnk on t.bankId=bnk.id 
+	    <where>
+  	        <if test="sets != null and sets.size()>0">
+  	   	        t.channelId in 
+                 <foreach collection="sets" open="(" close=")" separator="," item="channelId">
+                     #{channelId}
+                 </foreach>
+            </if>
+        </where>
+    </select>
+    
+</mapper>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eveb.bottlepay.common.mapper.PayRecordMapper">
+
+    <insert id="inserPayRecord" parameterType="com.eveb.bottlepay.common.entity.PayRecord" >
+    	<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+      	 </selectKey>
+         INSERT INTO pay_record(fee, 
+         					   outTradeNo,
+         					   customerTradeNo,
+         					   userId,
+         					   userName,
+         					   status,
+         					   remark,
+         					   channelId,
+         					   ip,
+         					   isSysPay,
+         					   createTime,
+         					   modifyTime
+         				) VALUES (
+         					  #{fee},
+         					  #{outTradeNo},
+         					  #{customerTradeNo},
+         					  #{userId},
+         					  #{userName},
+         					  #{status},
+         					  #{remark},
+         					  #{channelId},
+         					  #{ip},
+         					  #{isSysPay},
+         					  #{createTime},
+         					  #{modifyTime}
+         				)
+    </insert>
+    
+    <select id="selecInfoByTradeNo" resultType="com.eveb.bottlepay.common.entity.PayRecord">
+    	select t.id,
+			   t.fee,
+			   t.handlingCharge,
+			   t.discountsCharge,
+			   t.outTradeNo,
+			   t.customerTradeNo,
+		       t.userId,
+		       t.userName,
+		       t.userBalance,
+			   t.status,
+			   t.remark,
+			   t.channelId,
+			   t.ip,
+			   t.isSysPay,
+			   t.createTime,
+			   t.modifyTime,
+			   t.payTime,
+			   t.payError,
+			   c.vendorId 
+		 from pay_record t,
+		 	  channel c 
+		where t.channelId = c.id 
+		  and t.outTradeNo = #{outTradeNo}
+    </select>
+    
+    
+    <select id="findExchangeRecord" resultType="com.eveb.bottlepay.common.entity.PayRecord">
+    	select t.id,
+			   t.fee,
+			   t.handlingCharge,
+			   t.discountsCharge,
+			   t.outTradeNo,
+			   t.customerTradeNo,
+		       t.userId,
+		       t.userName,
+		       t.userBalance,
+			   t.status,
+			   t.remark,
+			   t.channelId,
+			   t.ip,
+			   t.isSysPay,
+			   t.createTime,
+			   t.modifyTime,
+			   t.payTime,
+			   t.payError 
+		 from pay_record t 
+		where t.userId = #{userId} order by t.createTime desc
+    </select>
+    
+    <select id="findAllPayRecord" resultType="com.eveb.bottlepay.common.entity.PayRecord" parameterType="com.eveb.bottlepay.common.entity.PayRecord">
+    	select t.id,
+			   t.fee,
+			   t.handlingCharge,
+			   t.discountsCharge,
+			   t.outTradeNo,
+			   t.customerTradeNo,
+		       t.userId,
+		       t.userName,
+		       t.userBalance,
+			   t.status,
+			   t.remark,
+			   t.channelId,
+			   t.ip,
+			   t.isSysPay,
+			   t.createTime,
+			   t.modifyTime,
+			   t.payTime,
+			   t.payError 
+		 from pay_record t 
+		 <include refid="payRecord_where"/>
+		 order by t.createTime desc
+    </select>
+    
+	<sql id="payRecord_where">
+    	<where>
+		 	<if test="outTradeNo != null and outTradeNo!=''">
+                AND t.outTradeNo like concat('%',#{outTradeNo},'%')
+            </if>
+            <if test="userName != null and userName!=''">
+                AND t.userName like concat('%',#{userName},'%')
+            </if>
+            <if test="status != null">
+                AND t.status = #{status}
+            </if>
+            <if test="startTime != null and startTime!=''">
+			   AND (t.createTime<![CDATA[ >=  ]]>str_to_date(#{startTime},'%Y-%m-%d %H:%i:%s'))
+			</if>
+			<if test="endTime != null and endTime!=''">
+			   AND (t.createTime<![CDATA[ <=  ]]>str_to_date(#{endTime},'%Y-%m-%d %H:%i:%s'))
+			</if>
+		 </where>
+    </sql>
+	
+    <update id="updateRayRecordInfo" parameterType="com.eveb.bottlepay.common.entity.PayRecord">
+    	update pay_record set status=#{status},
+    						 payTime=#{payTime},
+    						 payError=#{payError},
+    						 customerTradeNo=#{customerTradeNo},
+    						 userBalance=(select balance from user_balance where userId=#{userId})+#{userBalance}
+    				   where outTradeNo = #{outTradeNo}
+    </update>
+    
+    <update id="updateCustomerTradeNo">
+    	update pay_record set customerTradeNo=#{customerTradeNo} 
+    				   where outTradeNo = #{outTradeNo}
+    </update>
+    
+    <update id="updateRayRecordStatus">
+    	update pay_record set status=#{status} 
+    				   where outTradeNo = #{outTradeNo}
+    </update>
+    
+    <update id="updateListByPeriodOf">
+    	update pay_record set status=3,
+    						  modifyTime=NOW()
+    				   where status = 0 
+    				     and date_add(createTime, interval 30 MINUTE) <![CDATA[ < ]]> NOW()
+    </update>
+    
+    <delete id="deleteRecord" parameterType="java.lang.String">
+    	delete from pay_record where outTradeNo=#{outTradeNo}
+    </delete>
+    
+    <update id="updateStatus">
+    	update pay_record set status=#{status},
+    	                      isSysPay=#{isSysPay},
+    	                      modifyTime=#{modifyTime},
+    	                      userBalance=(select balance from user_balance where userId=#{userId}) 
+    	                where outTradeNo = #{outTradeNo}
+    </update>
+</mapper>

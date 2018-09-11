@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eveb.bottlepay.common.mapper.SiteCodeMapper">
+
+    <select id="getSiteCodeInfo" resultType="com.eveb.bottlepay.common.entity.SiteCode">
+         SELECT id,
+				siteCode,
+				siteName,
+				schemaName,
+				status 
+		 from saasops_manage.t_cp_site where status = 0 LIMIT 1
+    </select>
+    
+    <insert id="insetSiteUrlInfo">
+        insert into saasops_manage.t_cp_siteurl(siteId,
+                                                siteCode,
+                                                siteUrl
+                                                )
+                                                values
+                                                (
+                                                #{siteId},
+                                                #{siteCode},
+                                                #{siteUrl}
+                                                )
+    </insert>
+    
+    <select id="getSiteUrlList" resultType="java.util.HashMap">
+    	SELECT siteCode, 
+    		   siteUrl 
+		 from saasops_manage.t_cp_siteurl 
+		<where>
+			<if test="siteCodes != null and siteCodes.size()>0">
+                AND siteCode in 
+                <foreach collection="siteCodes" open="(" close=")" separator="," item="siteCode">
+                    #{siteCode}
+                </foreach>
+            </if>
+        </where>
+        group by siteCode
+    </select>
+
+    <update id="updateSiteCodeInfo">
+        update saasops_manage.t_cp_site set siteName=#{templateName},status=1 where id=#{id}
+    </update>
+</mapper>

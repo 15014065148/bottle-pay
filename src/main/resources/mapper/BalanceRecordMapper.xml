@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eveb.bottlepay.common.mapper.BalanceRecordMapper">
+
+    <insert id="insertBalanceRecordInfo">
+    	<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+      	 </selectKey>
+         INSERT INTO balance_record(userId,
+								    payTime,
+									payType,
+									payTypeId,
+									balanceChange,
+									payStatus,
+									createTime
+         				) VALUES (
+         					  #{userId},
+         					  #{payTime},
+         					  #{payType},
+         					  #{payTypeId},
+         					  #{balanceChange},
+         					  #{payStatus},
+         					  #{createTime}
+         				)
+    </insert>
+    
+    <update id="updateBalanceRecordStatus">
+    	update balance_record set payStatus=#{payStatus}, balance=(select balance from user_balance where userId=#{userId}) where id=#{id}
+    </update>
+    
+    <select id="getBalanceRecordInfo" resultType="com.eveb.bottlepay.common.entity.BalanceRecord">
+    	select id,
+    		   userId,
+		       payTime,
+			   payType,
+			   payTypeId,
+			   balanceChange,
+			   balance,
+			   payStatus,
+			   createTime 
+		 from balance_record where userId=#{userId}
+		                        and payTypeId=#{payTypeId}
+		                        and payType=#{payType}
+    </select>
+    
+    <select id="getBalanceRecordList" resultType="com.eveb.bottlepay.common.entity.BalanceRecord" parameterType="java.lang.Integer">
+    	select id,
+    		   userId,
+		       payTime,
+			   payType,
+			   payTypeId,
+			   balanceChange,
+			   balance,
+			   payStatus,
+			   createTime 
+		 from balance_record where userId=#{userId} order by createTime desc
+    </select>
+    
+    
+    <update id="updatePrice">
+    	update balance_record set balanceChange=#{balanceChange} 
+    	                    where payTypeId=#{payTypeId} 
+    	                      and payType=#{payType} 
+    	                      and userId=#{userId}
+    </update>
+    
+    <delete id="deleteBalanceRecord">
+    	delete from balance_record where payTypeId=#{payTypeId} 
+    							     and payType=#{payType} 
+    	                      		 and userId=#{userId}
+    </delete>
+    
+</mapper>

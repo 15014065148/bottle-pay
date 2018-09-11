@@ -1,0 +1,127 @@
+INSERT INTO `channel`(`id`, `vendorId`, `merNo`, `name`, `account`, `code`, `suportMachine`, `maxLimit`, `maxLimitDaily`, `minLimit`, `description`, `isEnable`, `sort`, `createUser`, `createTime`, `modifyUser`, `modifyTime`, `payCode`, `urlMethod`, `logoUrl`) VALUES (1, 1, '8151254850983206', '网银', '8153129665660870', 'PLPANZIZHIFUBAO001', 3, 20000, 1000000, 10, '盘子支付_网银', 1, 99998, NULL, '2017-12-20 01:40:30', NULL, '2017-12-20 01:40:30', 'BANK', 0, 'public/images/images_personal/recharge-zfb.png');
+INSERT INTO `channel`(`id`, `vendorId`, `merNo`, `name`, `account`, `code`, `suportMachine`, `maxLimit`, `maxLimitDaily`, `minLimit`, `description`, `isEnable`, `sort`, `createUser`, `createTime`, `modifyUser`, `modifyTime`, `payCode`, `urlMethod`, `logoUrl`) VALUES (2, 1, '8151254850983206', '支付宝', '8152965649538026', 'PLPANZIWEIXIN001', 3, 500000, 1000000, 1, '盘子支付_支付宝', 0, 99997, NULL, '2017-12-20 01:40:30', NULL, '2017-12-20 01:40:30', 'QR_UNION', 0, 'public/images/images_personal/recharge-wx.png');
+INSERT INTO `channel`(`id`, `vendorId`, `merNo`, `name`, `account`, `code`, `suportMachine`, `maxLimit`, `maxLimitDaily`, `minLimit`, `description`, `isEnable`, `sort`, `createUser`, `createTime`, `modifyUser`, `modifyTime`, `payCode`, `urlMethod`, `logoUrl`) VALUES (3, 1, '8151254850983206', '银联扫码', '8153180633901190', 'PLPANZIXINYONGKA001', 3, 500000, 1000000, 1, '盘子支付_银联扫码', 0, 99996, NULL, '2017-12-20 01:40:30', NULL, '2017-12-20 01:40:30', 'BANK', 1, 'public/images/images_personal/recharge-xy.png');
+INSERT INTO `channel`(`id`, `vendorId`, `merNo`, `name`, `account`, `code`, `suportMachine`, `maxLimit`, `maxLimitDaily`, `minLimit`, `description`, `isEnable`, `sort`, `createUser`, `createTime`, `modifyUser`, `modifyTime`, `payCode`, `urlMethod`, `logoUrl`) VALUES (4, 1, '8151254850983206', '快捷支付', '8153180661154019', 'PLLIANLIANJIEJIKA001', 3, 500000, 1000000, 1, '盘子支付_快捷支付', 0, 99999, NULL, '2017-12-20 01:40:30', NULL, '2017-12-20 01:40:30', 'BANK', 0, 'public/images/images_personal/recharge-yl.png');
+
+
+
+
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (45, 1, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (46, 4, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (47, 20, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (48, 9, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (49, 5, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (50, 7, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (51, 3, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (52, 8, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (53, 15, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (54, 6, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (55, 10, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (56, 12, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (57, 14, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (58, 11, 1);
+INSERT INTO `channel_bank`(`id`, `bankId`, `channelId`) VALUES (59, 24, 1);
+
+
+
+
+INSERT INTO `s_sys_config`(`id`, `groups`, `keys`, `values`, `description`) VALUES (1, 'proxy', '10.10.10.9', 'socks,10.10.10.9,1080', '代理');
+INSERT INTO `s_sys_config`(`id`, `groups`, `keys`, `values`, `description`) VALUES (2, 'groxyApi', '1', '{\"proxyType\":\"SOCKS\",\"ip\":\"10.10.10.9\",\"port\":1080}', '');
+INSERT INTO `s_sys_config`(`id`, `groups`, `keys`, `values`, `description`) VALUES (3, 'groxyApi', '1', '{\"proxyType\":\"SOCKS\",\"ip\":\"10.10.10.9\",\"port\":1080}', '');
+INSERT INTO `s_sys_config`(`id`, `groups`, `keys`, `values`, `description`) VALUES (4, 'groxyPay', 'HUITOONGPAY', 'SOCKS,10.10.10.9,1080', '汇通代理');
+
+
+
+INSERT INTO `vendor`(`id`, `vendorName`, `vendorCode`, `returnUrl`, `notifyUrl`, `isEnable`, `password`, `createUser`, `createTime`, `modifyUser`, `modifyTime`) VALUES (1, '盘子支付', 'Pzpay', 'http://202.61.86.190:6001/api/OnlinePay/pzPay/pzpayNotify', 'http://202.61.86.190:6001/api/OnlinePay/pzPay/pzpayNotify', 1, '158ead8309274816ba2356e1d7c10e62', 'wiliam', '2018-01-16 22:11:23', 'william', '2018-01-16 22:11:30');
+
+
+
+
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (1, '中国银行', 'BOC', '/temppic/bank/BOC.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (3, '中国农业银行', 'ABC', '/temppic/bank/ABC.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (4, '中国工商银行', 'ICBC', '/temppic/bank/ICBC.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (5, '民生银行', 'CMBC', '/temppic/bank/CMBC.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (6, '招商银行', 'CMB', '/temppic/bank/CMB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (7, '兴业银行', 'CIB', '/temppic/bank/CIB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (8, '交通银行', 'BOCOM', '/temppic/bank/BOCOM.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (9, '中信银行', 'CITIC', '/temppic/bank/CITIC.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (10, '中国光大银行', 'CEB', '/temppic/bank/CEB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (11, '华夏银行', 'HXBC', '/temppic/bank/HXBC.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (12, '广发银行', 'CGB', '/temppic/bank/CGB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (14, '浦发银行', 'SPDB', '/temppic/bank/SPDB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (15, '平安银行', 'PAB', '/temppic/bank/PAB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (16, '东亚银行', 'BEA', '/temppic/bank/BEA.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (17, '渤海银行', 'CBHB', '/temppic/bank/CBHB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (18, '北京农商银行', 'BJNSB', '/temppic/bank/BJNSB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (19, '北京银行', 'BOB', '/temppic/bank/BOB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (20, '中国建设银行', 'CCB', '/temppic/bank/CCB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (21, '宁波银行', 'NBCB', '/temppic/bank/NBCB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (22, '南京银行', 'NJCB', '/temppic/bank/NJCB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (23, '在线支付', 'PAY', '/temppic/bank/PAY.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (24, '中国邮政储蓄银行', 'PSBC', '/temppic/bank/PSBC.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (25, '支付宝', 'ZFB', '/temppic/bank/ZFB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (26, '深圳发展银行', 'SFB', '/temppic/bank/SFB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (27, '微信支付', 'WCP', '/temppic/bank/WCP.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (28, '上海农商行', 'SRCB', '/temppic/bank/SRCB.png');
+INSERT INTO `bank`(`id`, `bankName`, `bankCode`, `bankLog`) VALUES (29, '上海银行', 'BOSC', '/temppic/bank/BOSC.png');
+
+
+
+
+
+
+
+INSERT INTO user_balance(userId,balance) VALUES (13,0);
+INSERT INTO user_balance(userId,balance) VALUES (14,0);
+INSERT INTO user_balance(userId,balance) VALUES (15,0);
+INSERT INTO user_balance(userId,balance) VALUES (16,0);
+INSERT INTO user_balance(userId,balance) VALUES (17,0);
+INSERT INTO user_balance(userId,balance) VALUES (25,0);
+INSERT INTO user_balance(userId,balance) VALUES (26,0);
+INSERT INTO user_balance(userId,balance) VALUES (27,0);
+INSERT INTO user_balance(userId,balance) VALUES (28,0);
+INSERT INTO user_balance(userId,balance) VALUES (29,0);
+INSERT INTO user_balance(userId,balance) VALUES (30,0);
+INSERT INTO user_balance(userId,balance) VALUES (31,0);
+INSERT INTO user_balance(userId,balance) VALUES (32,0);
+INSERT INTO user_balance(userId,balance) VALUES (33,0);
+INSERT INTO user_balance(userId,balance) VALUES (34,0);
+INSERT INTO user_balance(userId,balance) VALUES (35,0);
+INSERT INTO user_balance(userId,balance) VALUES (36,0);
+INSERT INTO user_balance(userId,balance) VALUES (37,0);
+INSERT INTO user_balance(userId,balance) VALUES (39,0);
+INSERT INTO user_balance(userId,balance) VALUES (40,0);
+INSERT INTO user_balance(userId,balance) VALUES (41,0);
+INSERT INTO user_balance(userId,balance) VALUES (42,0);
+INSERT INTO user_balance(userId,balance) VALUES (43,0);
+INSERT INTO user_balance(userId,balance) VALUES (44,0);
+INSERT INTO user_balance(userId,balance) VALUES (45,0);
+INSERT INTO user_balance(userId,balance) VALUES (46,0);
+INSERT INTO user_balance(userId,balance) VALUES (47,0);
+INSERT INTO user_balance(userId,balance) VALUES (48,0);
+INSERT INTO user_balance(userId,balance) VALUES (49,0);
+INSERT INTO user_balance(userId,balance) VALUES (50,0);
+INSERT INTO user_balance(userId,balance) VALUES (51,0);
+INSERT INTO user_balance(userId,balance) VALUES (52,0);
+INSERT INTO user_balance(userId,balance) VALUES (53,0);
+INSERT INTO user_balance(userId,balance) VALUES (54,0);
+INSERT INTO user_balance(userId,balance) VALUES (55,0);
+INSERT INTO user_balance(userId,balance) VALUES (56,0);
+INSERT INTO user_balance(userId,balance) VALUES (57,0);
+INSERT INTO user_balance(userId,balance) VALUES (58,0);
+INSERT INTO user_balance(userId,balance) VALUES (59,0);
+INSERT INTO user_balance(userId,balance) VALUES (60,0);
+INSERT INTO user_balance(userId,balance) VALUES (61,0);
+INSERT INTO user_balance(userId,balance) VALUES (62,0);
+INSERT INTO user_balance(userId,balance) VALUES (63,0);
+INSERT INTO user_balance(userId,balance) VALUES (64,0);
+INSERT INTO user_balance(userId,balance) VALUES (65,0);
+INSERT INTO user_balance(userId,balance) VALUES (66,0);
+INSERT INTO user_balance(userId,balance) VALUES (67,0);
+INSERT INTO user_balance(userId,balance) VALUES (68,0);
+INSERT INTO user_balance(userId,balance) VALUES (69,0);
+INSERT INTO user_balance(userId,balance) VALUES (70,0);
+INSERT INTO user_balance(userId,balance) VALUES (71,0);
+INSERT INTO user_balance(userId,balance) VALUES (72,0);
+INSERT INTO user_balance(userId,balance) VALUES (73,0);
+INSERT INTO user_balance(userId,balance) VALUES (74,0);

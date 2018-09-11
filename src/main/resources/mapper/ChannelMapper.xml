@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eveb.bottlepay.common.mapper.ChannelMapper">
+
+    <select id="getPaymentType" parameterType="java.lang.Integer" resultType="com.eveb.bottlepay.common.entity.Channel" >
+         SELECT id,
+				vendorId,
+				merNo,
+				name,
+				account,
+				code,
+				suportMachine,
+				maxLimit,
+				maxLimitDaily,
+				minLimit,
+				description,
+				isEnable,
+				sort,
+				createUser,
+				createTime,
+				modifyUser,
+				modifyTime,
+				payCode,
+				urlMethod,
+				logoUrl
+		 from channel where vendorId = #{vendorId}
+    </select>
+    
+    <select id="getChannelById" resultType="com.eveb.bottlepay.common.entity.Channel" parameterType="java.lang.Integer">
+        select 
+			id,
+			vendorId,
+			merNo,
+			name,
+			account,
+			code,
+			suportMachine,
+			maxLimit,
+			maxLimitDaily,
+			minLimit,
+			description,
+			isEnable,
+			sort,
+			createUser,
+			createTime,
+			modifyUser,
+			modifyTime,
+			payCode,
+			urlMethod,
+			logoUrl
+		from channel where id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,8 @@
+alter table pay_record add isSysPay int(2) comment '是否后台支付 0否 1是';
+alter table bill_detail add isSysPay int(2) comment '是否后台支付 0否 1是';
+alter table pay_record add userName varchar(200) comment '用户名' after userId;
+alter table bill_detail add userName varchar(200) comment '用户名' after userId;
+alter table pay_record add userBalance varchar(200) comment '用户余额' after userName; 
+alter table saasops_manage.t_cp_site add status int(2) comment '是否使用 1.是 0.非'
+update saasops_manage.t_cp_site set status=0;
+update saasops_manage.t_cp_site set status=1 where siteCode='ybh';
